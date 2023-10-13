@@ -37,14 +37,14 @@ int main() {
         cin >> t[i] >> s;
         tempm=temps="";
         for (int i=0; i<s.size(); i++) {
-            if (i==0 || i==1) tempm.push_back(s[i]);    // 이건 좀 패고싶다
+            if (i==0 || i==1) tempm.push_back(s[i]);
             if (i==3 || i==4) temps.push_back(s[i]);
         }
         temp = stoi(tempm) * 60 + stoi(temps);
         sec[i] = temp;
     }
 
-    t[N] = 0;
+    t[N] = 0;           // 이 부분이 별로다. 만약 배열을 입력값으로 받을 떄 사용할 수 없다.
     sec[N] = 48*60;
 
     for (int i=0; i<N+1; i++) {
