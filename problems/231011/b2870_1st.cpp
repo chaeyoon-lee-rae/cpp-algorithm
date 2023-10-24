@@ -15,17 +15,13 @@ long long (10^18)으로도 커버하지 못하는 크기인 것이다.
 #include <bits/stdc++.h>
 using namespace std;  
 
-int H, W, a[104][104];
-string s;
-char temp;
+string s, stemp;
+vector<int> v;
+int N;
 
-void go(int y, int x) {
-    int nx = x + 1;
-    if (nx >= W) return;
-    if (a[y][nx]!=0) a[y][nx] = a[y][x] + 1;
-    go(y, nx);
-
-    return;
+bool isNum(char ch) {
+    if (ch - '0' > 9 || ch - '0' < 0) return false;
+    else return true;
 }
 
 int main() {
@@ -33,33 +29,28 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
 
-    memset(a, -1, sizeof(a));
-
-    cin >> H >> W;
-    for (int i=0; i<H; i++) {
+    cin >> N;
+    for (int i=0; i<N; i++) {
         cin >> s;
-        for (int j=0; j<W; j++) {
-            temp = s[j];
-            if (temp=='c') {
-                a[i][j]=0;
+        for (char ch : s) {
+            if (isNum(ch)) stemp.push_back(ch);
+            else {
+                if (stemp.size()!=0) {
+                    v.push_back(stoll(stemp)); 
+                }
+                stemp = "";
             }
         }
+        if (stemp.size()!=0) {
+            v.push_back(stoll(stemp)); 
+        }
+        stemp="";
     }
 
-    for (int i=0; i<H; i++) {
-        for (int j=0; j<W; j++) {
-            if (a[i][j]==0) {
-                go(i, j);
-                break;
-            }
-        }
-    }
+    sort(v.begin(), v.end());
 
-    for (int i=0; i<H; i++) {
-        for (int j=0; j<W; j++) {
-            cout << a[i][j] << " ";
-        }
-        cout << '\n';
+    for (int a : v) {
+        cout << a << '\n';
     }
 
     return 0;
