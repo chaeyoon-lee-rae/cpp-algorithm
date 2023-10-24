@@ -48,7 +48,7 @@ int main() {
                 if (stemp.size()!=0) {
                     v.push_back(rmZero(stemp));
                 }
-                stemp = "";
+                stemp = "";     // stemp.clear()도 가능
             }
         }
         if (stemp.size()!=0) {
