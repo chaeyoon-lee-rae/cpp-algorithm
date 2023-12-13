@@ -6,18 +6,22 @@ int N, a[24], ret=INF;
 string s;
 vector<int> idxV;
 
-void go() {
-    int tempRet=0;
-    for (int i=0; i<N; ++i) {
-        int numH=0, numT=0;
-        for (int j=0; j<N; ++j) {
-            if (a[j] & (1<<i)) ++numH;
-            else ++numT;
+void go(int here) {
+    if (here==N+1) {
+        int tempRet=0;
+        for (int i=0; i<N; ++i) {
+            int cnt=0;
+            for (int j=0; j<N; ++j) {
+                if (a[j] & (1<<i)) ++cnt;
+            }
+            tempRet += min(cnt, N-cnt);
         }
-        if (numH>=numT) tempRet+=numT;
-        else tempRet+=numH;
+        ret = min(ret,tempRet);
+        return;
     }
-    ret = min(ret,tempRet);
+    go(here+1);
+    a[here]=~a[here];
+    go(here+1);
 }
 
 int main() {
@@ -28,22 +32,14 @@ int main() {
     cin >> N;
     for (int i=0; i<N; ++i) {
         cin >> s;
-        int temp=0;
+        int temp=1;
         for (int j=0; j<N; ++j) {
-            if (s[j]=='H') temp += 1<<(N-j-1);
+            if (s[j]=='H') a[i] |= temp;
+            temp*=2;
         }
-        a[i]=temp;
     }
 
-    for (int i=0; i<(1<<N); ++i) {
-        for (int j=0; j<N; ++j) {
-            if (i & (1<<j)) a[j]=~a[j], idxV.push_back(j);
-        }
-        go();
-        for (int idx : idxV) a[idx]=~a[idx];
-        idxV.clear();
-    }
-
+    go(1);
     cout << ret << '\n';
 
     return 0;
