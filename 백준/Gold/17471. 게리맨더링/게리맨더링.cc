@@ -2,38 +2,20 @@
 using namespace std;  
 
 const int INF=1e6;
-int N, pop[11], popSum, ret=INF;
+int N, pop[11], ret=INF, idx1, idx2;
 bool visited[11], color[11];
 vector<int> v[11];
 
-void dfs(int here, int colored) {
+pair<int,int> dfs(int here, int colored) {
     visited[here]=1;
-    for (int there : v[here-1]) {
-        if (color[there]==colored && !visited[there]) dfs(there, colored);
+    pair<int,int> ret = {1,pop[here]};
+    for (int there : v[here]) {
+        if (color[there]!=colored || visited[there]) continue;
+        pair<int,int> temp = dfs(there, colored);
+        ret.first += temp.first;
+        ret.second += temp.second;
     }
-}
-
-void go(int node, vector<int> vec1, vector<int> vec2) {
-    if (node==N+1) {
-        if (!vec1.size()||!vec2.size()) return;
-        memset(visited, 0, sizeof(visited)); dfs(vec1[0],1); 
-        int numppl=0;
-        for (int val:vec1) {
-            if (!visited[val]) return;
-            numppl += pop[val-1]; 
-        }
-
-        memset(visited, 0, sizeof(visited)); dfs(vec2[0],0);
-        for (int val:vec2) if (!visited[val]) return;
-        ret = min(ret, abs(numppl-(popSum-numppl)));
-        return;
-    }
-
-    vec1.push_back(node); color[node]=1;
-    go(node+1, vec1, vec2);
-    vec1.pop_back(); color[node]=0;
-    vec2.push_back(node);
-    go(node+1, vec1, vec2);
+    return ret;
 }
 
 int main() {
@@ -42,11 +24,10 @@ int main() {
     cout.tie(NULL);
 
     cin >> N;
-    for (int i=0; i<N; ++i) {
+    for (int i=1; i<=N; ++i) {
         cin >> pop[i];
-        popSum += pop[i];
     }
-    for (int i=0; i<N; ++i) {
+    for (int i=1; i<=N; ++i) {
         int tempCnt=0; cin >> tempCnt;
         for (int j=0; j<tempCnt; ++j) {
             int temp=0; cin >> temp;
@@ -54,8 +35,18 @@ int main() {
         }
     }
 
-    vector<int> vec1, vec2;
-    go(1, vec1, vec2);
+    for (int i=1; i<(1<<N)-1; ++i) {
+        memset(color, 0, sizeof(color));
+        memset(visited, 0, sizeof(visited));
+        idx1=-1, idx2=-1;
+        for (int j=0; j<N; ++j) {
+            if (i & (1<<j)) color[j+1]=1, idx1=j+1;
+            else idx2=j+1;
+        }
+        pair<int,int> res1 = dfs(idx1, 1);
+        pair<int,int> res2 = dfs(idx2, 0);
+        if (res1.first + res2.first == N) ret = min(ret, abs(res1.second-res2.second));
+    }
     
     cout << ((ret==INF) ? -1 : ret) << '\n';
 
