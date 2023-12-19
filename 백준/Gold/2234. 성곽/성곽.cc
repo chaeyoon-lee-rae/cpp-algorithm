@@ -35,8 +35,8 @@ int main() {
             if (!visited[i][j]) {
                 ++ret1;
                 cntSum[ret1] = dfs(i, j, ret1);
-                ret2 = max(ret2, cntSum[ret1]);
             }
+            ret2 = max(ret2, cntSum[ret1]);
         }
     }
 
