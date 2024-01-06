@@ -1,15 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-int K, N, M, adj[1001][1001];
+int K, N, M;
 bool visited[1001];
+vector<int> adj[1001];
 
 void dfs(int from) {
     visited[from]=1; 
-    for (int i=1; i<=N; ++i) {
-        if (visited[i]) continue;
-        if (adj[from][i]) dfs(i);
+    for (int val : adj[from]) {
+        if (!visited[val]) dfs(val);
     }
+    return;
 }
 
 int main() {
@@ -20,14 +21,13 @@ int main() {
     cin >> K;
     while(K--) {
         cin >> N >> M;
-        bool flag=0; memset(adj, 0, sizeof(adj));
-        memset(visited, 0, sizeof(visited));
+        bool flag=0; memset(visited, 0, sizeof(visited));
+        for (int i=0; i<1001; ++i) adj[i].clear();
         for (int i=0; i<M; ++i) {
             int node1, node2;
             cin >> node1 >> node2;
-            if (adj[node1][node2]==0 && adj[node2][node1]==0) {
-                ++adj[node1][node2]; ++adj[node2][node1];
-            }
+            adj[node1].push_back(node2);
+            adj[node2].push_back(node1);
         }
         if (flag==0) {
             dfs(1);
