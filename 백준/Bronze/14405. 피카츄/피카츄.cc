@@ -2,19 +2,7 @@
 using namespace std;  
 
 string s;
-
-vector<string> split(string input, string del) {
-    vector<string> ret;
-    int pos = 0;
-    string token="";
-    while ((pos=input.find(del))!=string::npos) {
-        token=input.substr(0,pos);
-        ret.push_back(token);
-        input.erase(0, pos+del.length());
-    }
-    ret.push_back(input);
-    return ret;
-}
+bool flag;
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -22,18 +10,12 @@ int main() {
     cout.tie(NULL);
 
     cin >> s;
-    vector<string> vs_pi=split(s,"pi");
-    for (string val : vs_pi) {
-        vector<string> vs_ka=split(val,"ka");
-        for (string val2 : vs_ka) {
-            vector<string> vs_chu=split(val2,"chu");
-            for (string ret : vs_chu) {
-                if (ret!="") {cout << "NO" << '\n'; return 0;}
-            }
-        }
+    for (int i=0; i<s.size(); ++i) {
+        if (i<s.size()-1 && (s.substr(i,2)=="pi" || s.substr(i,2)=="ka")) i+=1;
+        else if (i<s.size()-2 && s.substr(i,3)=="chu") i+=2;
+        else flag=1;
     }
-    
-    cout << "YES" << '\n';
+    cout << (flag==0 ? "YES" : "NO") << '\n';
 
     return 0;
 }
