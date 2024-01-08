@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-int len, a[200001], num, ret;
-stack<int> stk;
+int len, num, ret;
 string s;
+stack<int> stk;
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -11,21 +11,18 @@ int main() {
     cout.tie(NULL);
 
     cin >> len >> s;
+    stk.push(-1);
     for (int i=0; i<len; ++i) {
         if (s[i]=='(') stk.push(i);
-        else if (!stk.empty()) {
-            a[i] = a[stk.top()] = 1;
+        else {
             stk.pop();
+            if (stk.size()) {
+                ret = max(ret, i - stk.top());
+            }
+            else stk.push(i);
         }
     }
-
-    for (int i=0; i<len; ++i) {
-        if (a[i]) ++num, ret = max(ret, num);
-        else num=0;
-    }
-
     cout << ret << '\n';
-
 
     return 0;
 }
