@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-string s;
+char c[1004];
 int N;
 
 int main() {
@@ -9,8 +9,8 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
 
-    cin >> s >> N;
-    cout << s[--N] << '\n';
+    scanf("%s %d", c, &N);
+    printf("%c\n", c[--N]);
 
     return 0;
 }
