@@ -2,17 +2,17 @@
 using namespace std;  
 
 int N;
-string s;
+char s[1001];
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    cin >> N;
+    scanf("%d", &N);
     for (int i=0; i<N; ++i) {
-        cin >> s;
-        cout << s.front() << s.back() << '\n';
+        scanf("%s", s);
+        printf("%c%c\n", s[0], s[strlen(s)-1]);
     }
 
     return 0;
