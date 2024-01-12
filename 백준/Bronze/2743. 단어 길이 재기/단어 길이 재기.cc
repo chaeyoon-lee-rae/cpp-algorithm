@@ -10,8 +10,7 @@ int main() {
     cout.tie(NULL);
 
     scanf("%s", c);
-    int i=0; while(c[i]!='\0') ++cnt, ++i;
-    printf("%d\n", cnt);
+    printf("%ld\n", strlen(c));
 
     return 0;
 }
