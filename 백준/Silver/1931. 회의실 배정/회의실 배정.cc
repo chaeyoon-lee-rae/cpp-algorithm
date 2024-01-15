@@ -1,28 +1,26 @@
 #include <bits/stdc++.h>
-using namespace std;
+using namespace std;  
 
-int from, to, n, idx = 0, ret = 1;  
-vector<pair<int, int>> v; 
+int N, cnt, x, y, comp;
+vector<pair<int,int>> v;
 
-int main(){
+int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    cin >> n;
-    
-    for(int i = 0; i < n; i++){
-        cin >> from >> to;
-        v.push_back({to, from}); 
+    cout.tie(NULL);
+
+    cin >> N;
+    for (int i=0; i<N; ++i) {
+        cin >> x >> y;
+        v.push_back({y,x});
     }
-    sort(v.begin(), v.end()); 
+    sort(v.begin(),v.end());
 
-    to = v[0].first;   
-    for(int i = 1; i < n; i++){
-        if(to <= v[i].second) {
-            to = v[i].first;
-            ret++; 
-        }
-    } 
+    comp=v[0].first; ++cnt;
+    for (int i=1; i<N; ++i) {
+        if (comp<=v[i].second) ++cnt, comp = v[i].first;
+    }
+    cout << cnt << '\n';
 
-    cout << ret << '\n';
     return 0;
 }
