@@ -16,9 +16,8 @@ int main() {
     }
     sort(v.begin(),v.end());
 
-    comp=v[0].first; ++cnt;
-    for (int i=1; i<N; ++i) {
-        if (comp<=v[i].second) ++cnt, comp = v[i].first;
+    for (auto it:v) {
+        if (comp==0||comp<=it.second) ++cnt, comp=it.first;
     }
     cout << cnt << '\n';
 
