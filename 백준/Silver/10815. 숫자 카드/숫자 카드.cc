@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-map<int, int> mp;
 int N, M;
+vector<int> v;
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -12,12 +12,14 @@ int main() {
     cin >> N;
     for (int i=0; i<N; ++i) {
         int temp; cin >> temp;
-        mp.insert({temp,1});
+        v.push_back(temp);
     }
+    sort(v.begin(), v.end());
+
     cin >> M;
     for (int i=0; i<M; ++i) {
         int temp; cin >> temp;
-        cout << (mp[temp]==0 ? 0 : 1) << ' '; 
+        cout << (binary_search(v.begin(), v.end(), temp) ? 1 : 0) << ' ';
     }
 
     return 0;
