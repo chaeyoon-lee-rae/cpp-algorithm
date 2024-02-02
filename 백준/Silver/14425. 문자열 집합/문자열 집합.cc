@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
+set<string> st;
 int N, M, cnt;
-vector<string> v;
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -12,15 +12,13 @@ int main() {
     cin >> N >> M;
     for (int i=0; i<N; ++i) {
         string temp; cin >> temp;
-        v.push_back(temp);
+        st.insert(temp);
     }
-    sort(v.begin(),v.end());
-
     for (int i=0; i<M; ++i) {
         string temp; cin >> temp;
-        if (binary_search(v.begin(), v.end(), temp)) ++cnt;
+        if (st.find(temp)!=st.end()) ++cnt;
     }
     cout << cnt << '\n';
-
+    
     return 0;
 }
