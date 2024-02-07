@@ -2,7 +2,10 @@
 using namespace std;  
 
 int N, M;
-unordered_map<int, int> mp;
+
+int calc(vector<int> &v, int &temp) {
+    return (upper_bound(v.begin(),v.end(),temp) - lower_bound(v.begin(),v.end(),temp));
+}
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -10,14 +13,15 @@ int main() {
     cout.tie(NULL);
 
     cin >> N;
+    vector<int> v(N);
     for (int i=0; i<N; ++i) {
-        int temp; cin >> temp;
-        ++mp[temp];
+        cin >> v[i];
     }
+    sort(v.begin(), v.end());
     cin >> M;
     for (int i=0; i<M; ++i) {
         int temp; cin >> temp;
-        cout << mp[temp] << ' ';
+        cout << calc(v, temp) << ' ';
     }
 
     return 0;
