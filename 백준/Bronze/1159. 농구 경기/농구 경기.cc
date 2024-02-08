@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-int a[26], N, cnt;
+int a[26], N;
 string s, ret;
 
 int main() {
@@ -13,7 +13,6 @@ int main() {
     for (int i=0; i<N; ++i) {
         cin >> s;
         ++a[s[0]-'a'];
-        cnt = max(cnt, a[s[0]-'a']);
     }
 
     for (int i=0; i<26; ++i) {
