@@ -2,11 +2,11 @@
 using namespace std;  
 
 int N;
-string org, start, last, temp;
+string s, start, last, temp;
 
 bool comp(string &temp) {
     if (start.size()+last.size()<=temp.size()) {
-        return temp.substr(0,start.size())==start&&temp.substr(temp.size()-last.size(),last.size())==last;
+        return temp.substr(0,start.size())==start&&temp.substr(temp.size()-last.size())==last;
     } else return false;
 }
 
@@ -15,18 +15,14 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
 
-    cin >> N >> org;
-    int i;
-    for (i=0; i<org.size(); ++i) {
-        if (org[i]!='*') start+=org[i];
-        else {++i; break;}
-    }
-    last = org.substr(i, org.size()-i);
-
+    cin >> N >> s;
+    int idx = s.find('*');
+    start = s.substr(0,idx);
+    last = s.substr(idx+1);
     for (int i=0; i<N; ++i) {
         cin >> temp;
-        cout << (comp(temp) ? "DA" : "NE") << '\n';
+        cout << (comp(temp)?"DA":"NE") << '\n';
     }
-
+    
     return 0;
 }
