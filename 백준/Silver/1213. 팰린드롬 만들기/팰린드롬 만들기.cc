@@ -16,8 +16,7 @@ int main() {
     }
 
     for (int i=0; i<26; ++i) {
-        if (a[i]==0) continue;
-        else {
+        if (a[i]) {
             start.append(a[i]/2,i+'A');
             mid.append(a[i]%2,i+'A');
         }
