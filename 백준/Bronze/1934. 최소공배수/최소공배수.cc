@@ -17,8 +17,7 @@ int main() {
     cin >> N; 
     while(N--) {
         cin >> a >> b;
-        int r = gcd(a, b);
-        ret = (a*b)/r;
+        ret = (a*b)/gcd(a, b);
         cout << ret << '\n';
     }
 
