@@ -23,21 +23,9 @@ int main() {
 
     int sy=0, sx=0, cnt=0;
     while (ret<=10000) {
-        b[sy][sx]=1; q.push({sy,sx});
-        // cout << "time : " << ret << '\n';
-        // for (int i=0; i<N; ++i) {
-        //     for (int j=0; j<N; ++j) {
-        //         cout << b[i][j] << ' ';
-        //     }
-        //     cout << '\n';
-        // }
-        // cout << '\n';
-
+        b[sy][sx]=1; q.push({sy,sx}); 
         if (turn[ret]=='D') ++cnt %= 4; 
-        else if (turn[ret]=='L') {
-            --cnt;
-            if (cnt<0) cnt=3;
-        }
+        else if (turn[ret]=='L') cnt-1<0 ? cnt=3 : --cnt;
         int ny=sy + dy[cnt];
         int nx=sx + dx[cnt];
         if (ny<0||ny>=N||nx<0||nx>=N||b[ny][nx]) break;
@@ -45,7 +33,6 @@ int main() {
         else tie(y,x)=q.front(), b[y][x]=0, q.pop();
         ++ret;
         sy=ny; sx=nx;
-
     }
     cout << ++ret << '\n';
 
