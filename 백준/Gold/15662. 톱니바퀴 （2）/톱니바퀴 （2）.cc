@@ -40,7 +40,7 @@ int main() {
         if (gearIdx%2) dir *= -1; 
         for (int i=0; i<N; ++i) {
             if (i==gearIdx) continue;
-            if (rot[i]) rotateGear(dir*(pow(-1,i)), i, v);
+            if (rot[i]) rotateGear(dir*(i%2==0?1:-1), i, v);
         }
     }
 
