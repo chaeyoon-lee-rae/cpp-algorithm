@@ -1,10 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-int a[1001], b[1001], pSumA[2002], pSumB[2002], order, n, m, temp, ret;
-map<int,int> mpA, mpB;
+const int mx=1e6;
+int a[1001], b[1001], pSumA[2002], pSumB[2002], order, n, m, temp, ret, mpA[mx+1], mpB[mx+1];
 
-void getComb(int n, int pSum[], map<int,int> &mp) {
+void getComb(int n, int pSum[], int mp[]) {
     for (int i=1; i<=n; ++i) {
         for (int j=0; j<n; ++j) {
             ++mp[pSum[j+i]-pSum[j]];
