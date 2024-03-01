@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-int N, pSum[100001], temp, ret=-1001, sum;
+int N, temp, ret=-1001, sum;
 
 int main() {
     ios_base::sync_with_stdio(false);
