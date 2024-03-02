@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-string s, rm, ret;
-vector<int> v;
+string s, rm;
+stack<char> stk;
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -11,14 +11,28 @@ int main() {
 
     cin >> s >> rm;
     for (int i=0; i<s.size(); ++i) {
-        ret+=s[i];
-        if (ret.back()==rm[0]) v.push_back(ret.size()-1);
-        if (v.size()&&ret.substr(v.back())==rm) {
-            ret.erase(v.back());
-            v.pop_back();
+        stk.push(s[i]);
+        if (stk.size()>=rm.size()&&stk.top()==rm.back()) {
+            string temp="";
+            for (int j=0; j<rm.size(); ++j) {
+                temp+=stk.top(); stk.pop();
+            }
+            reverse(temp.begin(), temp.end());
+            if (temp!=rm) {
+                for (char c:temp) stk.push(c);
+            }
         }
     }
-    cout << (ret.size() ? ret : "FRULA") << '\n';
+
+    if (stk.empty()) cout << "FRULA" << '\n';
+    else {
+        string ret="";
+        while(stk.size()) {
+            ret+=stk.top(); stk.pop();
+        }
+        reverse(ret.begin(), ret.end());
+        cout << ret << '\n';
+    }
 
     return 0;
 }
