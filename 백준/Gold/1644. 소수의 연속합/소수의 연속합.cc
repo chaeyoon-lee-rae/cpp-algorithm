@@ -2,8 +2,8 @@
 using namespace std;  
 
 const int mx=4000001;
-int N, cnt, sum, l, r; bool a[mx];
-vector<int> v;
+int n, sum, ret, k, b[1000001], c[1000001];
+bool a[mx];
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -11,25 +11,29 @@ int main() {
     cout.tie(NULL);
 
     fill(a,a+mx,true);
-    cin >> N;
-    for (int i=2; i*i<=N; ++i) {
-        if(a[i]) {
-            for (int j=i*i; j<=N; j+=i) {
+    cin >> n;
+    for (int i=2; i*i<=n; ++i) {
+        if (a[i]) {
+            for (int j=i*i; j<=n; j+=i) {
                 a[j]=false;
             }
         }
     }
-    for (int i=2; i<=N; ++i) {
-        if (a[i]) v.push_back(i);
+
+    for (int i=2; i<=n; ++i) {
+        if (a[i]) b[k++]=i;
+    }
+    for (int i=1; i<=k; ++i) {
+        c[i] = c[i-1]+b[i-1];
     }
 
-    while(true) {
-        if (sum>=N) sum-=v[l++];
-        else if (r==v.size()) break;
-        else sum+=v[r++];
-        if (sum==N) ++cnt;
+    int i=0, j=0;
+    while(j<=k) {
+        if (c[j]-c[i]<n) ++j;
+        else if (c[j]-c[i]>n) ++i;
+        else ++ret, ++i, ++j;
     }
-    cout << cnt << '\n';
+    cout << ret << '\n';
 
     return 0;
 }
