@@ -1,46 +1,46 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-int n, k, cnt, a[101];
-bool vis[101];
 const int INF=1e4;
-vector<int> v;
+int n, k, a[101], last[101], b[101], ret;
+bool plug[101]; 
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    cin >> n >> k;
+    scanf("%d %d", &n, &k);
     for (int i=0; i<k; ++i) {
-        cin >> a[i];
+        scanf("%d", a+i);
+        last[a[i]]=i;
     }
+
+    int p=0;
     for (int i=0; i<k; ++i) {
-        if (!vis[a[i]]) {
-            if (v.size()==n) {
-                int last_idx=0, last_val, erase_idx;
-                for (int e=0; e<n; ++e) {
+        if (!plug[a[i]]) {
+            if (p==n) {
+                int idx, mxIdx=0;
+                for (int x=0; x<n; ++x) {
                     int here=INF;
                     for (int j=i+1; j<k; ++j) {
-                        if (v[e]==a[j]) {
+                        if (b[x]==a[j]) {
                             here=j; break;
                         }
                     }
-                    if (last_idx<here) {
-                        last_idx=here;
-                        last_val=v[e];
-                        erase_idx = e;
+                    if (here>mxIdx) {
+                        mxIdx=here;
+                        idx=x;
                     }
-                }    
-                vis[last_val]=0;
-                v.erase(v.begin()+erase_idx);
-                ++cnt; 
-            }
-            v.push_back(a[i]);
-            vis[a[i]]=1;
+                }
+                plug[a[i]]=1;
+                plug[b[idx]]=0;
+                b[idx]=a[i];
+                ++ret;
+            } else plug[a[i]]=1, b[p]=a[i], ++p;
         }
     }
-    cout << cnt << '\n';
+    printf("%d\n", ret);
 
     return 0;
 }

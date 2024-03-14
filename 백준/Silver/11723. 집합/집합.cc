@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-int N, num, ret;
+int N, x, n;
 string s;
 
 int main() {
@@ -10,14 +10,14 @@ int main() {
     cout.tie(NULL);
 
     cin >> N;
-    for (int i=0; i<N; ++i) {
+    while (N--) {
         cin >> s;
-        if (s=="add") cin >> num, ret |= (1<<(num-1));
-        else if (s=="remove") cin >> num, ret &= ~(1<<(num-1));
-        else if (s=="check") cin >> num, cout << ((ret & (1<<(num-1))) ? 1 : 0) << '\n';
-        else if (s=="toggle") cin >> num, ret ^= (1<<(num-1));
-        else if (s=="all") ret = (1<<20)-1;
-        else ret=0;
+        if (s=="add") cin >> x, n|=(1<<x);
+        else if (s=="remove") cin >> x, n&=~(1<<x);
+        else if (s=="check") cin >> x, cout << (n&(1<<x)?1:0) << '\n';
+        else if (s=="toggle") cin >> x, n^=(1<<x);
+        else if (s=="all") n=(1<<21)-1;
+        else n=0;
     }
 
     return 0;

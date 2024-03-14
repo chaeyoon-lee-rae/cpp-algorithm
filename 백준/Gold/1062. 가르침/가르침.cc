@@ -1,23 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-int N, K, ret, words[51];
-bool letter[26];
+int n, k, words[51];
 
-
-void combi(int start, int num, int k) {
-    if (k==K) {
+int comb(int idx, int cnt, int mask) {
+    if (cnt < 0) return 0;
+    if (idx==26) {
         int tempRet=0;
-        for (int i=0; i<N; ++i) {
-            int word = words[i];
-            if (!(word & ~num)) ++tempRet;
+        for (int i=0; i<n; ++i) {
+            if ((words[i] & mask)==words[i]) ++tempRet;
         }
-        ret=max(ret, tempRet);
+        return tempRet;
     }
-
-    for (int i=start+1; i<26; ++i) {
-        combi(i, num | (1<<i), k+1);
+    int ret = comb(idx+1, cnt-1, mask|(1<<idx));
+    if (idx!='a'-'a'&&idx!='n'-'a'&&idx!='t'-'a'&&idx!='i'-'a'&&idx!='c'-'a') {
+        ret = max(ret, comb(idx+1, cnt, mask));
     }
+    return ret;
 }
 
 int main() {
@@ -25,16 +24,14 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
 
-    cin >> N >> K;
-    for (int i=0; i<N; ++i) {
-        string s; int word=0;
-        cin >> s;
-        for (char ch:s) word |= (1 << (ch-'a'));
-        words[i]=word;
+    cin >> n >> k;
+    for (int i=0; i<n; ++i) {
+        string s; cin >> s;
+        for (char ch:s) {
+            words[i] |= (1<<(ch-'a'));
+        }
     }
-
-    combi(-1, 0, 0);
-    cout << ret << '\n';
+    cout << comb(0,k,0) << '\n';
 
     return 0;
 }
