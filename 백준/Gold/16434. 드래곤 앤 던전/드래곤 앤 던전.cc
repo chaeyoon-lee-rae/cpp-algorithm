@@ -2,7 +2,7 @@
 using namespace std;  
 
 typedef long long ll;
-const ll INF=9e18;
+const ll INF=1e18;
 ll hCur, lo, hi, ret=INF, atk, n, t[123457], atkMon[123457], hMon[123457];
 
 bool check(ll mid) {
