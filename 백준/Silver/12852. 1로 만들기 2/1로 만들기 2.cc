@@ -1,15 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;  
-#define mx 1000001
 
 const int INF=1e9;
-int dp[mx], n;
+int dp[1000001], n;
 
 void go(int num) {
-    if(num==0) return;
-    cout << num << ' ';
-    if(num%3==0&&dp[num]==dp[num/3]+1) go(num/3);
-    else if (num%2==0&&dp[num]==dp[num/2]+1) go(num/2);
+    printf("%d ", num);
+    if (!(num%3)&&dp[num]==dp[num/3]+1) go(num/3);
+    else if (!(num%2)&&dp[num]==dp[num/2]+1) go(num/2);
     else if (num-1>=0&&dp[num]==dp[num-1]+1) go(num-1);
     return;
 }
@@ -19,15 +17,16 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
 
-    cin >> n;
-    fill(dp, dp+mx, INF);
+    scanf("%d", &n);
+    fill(dp, dp+1000001, INF);
     dp[1]=0;
     for (int i=1; i<=n; ++i) {
-        if(i%3==0) dp[i]=min(dp[i/3]+1, dp[i]);
-        if(i%2==0) dp[i]=min(dp[i/2]+1, dp[i]);
-        dp[i]=min(dp[i-1]+1, dp[i]);
+        int &ret=dp[i];
+        if (!(i%3)) ret=min(ret,dp[i/3]+1);
+        if (!(i%2)) ret=min(ret,dp[i/2]+1);
+        ret=min(ret,dp[i-1]+1);
     }
-    cout << dp[n] << '\n';
+    printf("%d\n", dp[n]);
     go(n);
 
     return 0;
