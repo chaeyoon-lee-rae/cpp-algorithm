@@ -1,20 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-const int mx=16, INF=1e9;
-int dp[mx][1<<mx], cost[mx][mx], n;
+const int INF=1e9, mx=16;
+int dp[mx][1<<mx], w[mx][mx], n;
 
-int go(int idx, int num) {
-    if (num==(1<<n)-1) {
-        return cost[idx][0] ? cost[idx][0] : INF;
+int go(int visited, int here) {
+    if (visited==(1<<n)-1) {
+        return w[here][0] ? w[here][0] : INF;
     }
-    int &ret=dp[idx][num];
+    int &ret=dp[here][visited];
     if (~ret) return ret;
     ret=INF;
     for (int i=0; i<n; ++i) {
-        if (num & (1<<i)) continue;
-        if (cost[idx][i]==0) continue;
-        ret=min(ret,go(i, num|(1<<i))+cost[idx][i]);
+        if (visited & (1<<i)) continue;
+        if (w[here][i]==0) continue;
+        ret=min(ret,go(visited|(1<<i),i)+w[here][i]);
     }
     return ret;
 }
@@ -24,15 +24,15 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
 
-    cin >> n;
+    scanf("%d", &n);
     for (int i=0; i<n; ++i) {
         for (int j=0; j<n; ++j) {
-            cin >> cost[i][j];
+            scanf("%d", &w[i][j]);
         }
     }
 
     memset(dp, -1, sizeof(dp));
-    cout << go(0,1) << '\n';
+    printf("%d\n", go(1,0));
 
     return 0;
 }
