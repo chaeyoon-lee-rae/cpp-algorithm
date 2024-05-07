@@ -22,6 +22,7 @@ void fillNum(int y, int x, int k, int num) {
 }
 
 void go(int i, int j, int cnt) {
+    if (cnt>=ret) return; // 가지치기 안해줬었지만 통과함
     if (j==n) { // dfs에서 이렇게 for-loop으로 순회하듯 순회 가능
         go(i+1,0, cnt);
         return;
