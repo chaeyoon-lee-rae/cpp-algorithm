@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-typedef long long ll;
-int n, c, a[31]; ll ret;
-vector<ll> v, v2;
+long long ret;
+int n, c, a[31];
+vector<int> v, v2;
 
-void go(ll sum, int idx, int _end, vector<ll> &v) {
+void go(int sum, int idx, int _end, vector<int> &v) {
     if (sum>c) return;
     if (idx==_end) {v.push_back(sum); return;}
     go(sum+a[idx], idx+1, _end, v);
@@ -23,8 +23,8 @@ int main() {
     go(0,n/2,n,v2);
     sort(v.begin(), v.end());
     sort(v2.begin(), v2.end());
-    for (ll val:v)
-        ret += (ll)(upper_bound(v2.begin(),v2.end(),c-val)-v2.begin());
+    for (int val:v)
+        ret += (int)(upper_bound(v2.begin(),v2.end(),c-val)-v2.begin());
 
     cout << ret << '\n';
     return 0;
