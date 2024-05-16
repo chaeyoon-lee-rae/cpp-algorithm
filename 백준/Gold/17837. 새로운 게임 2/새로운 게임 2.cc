@@ -1,11 +1,26 @@
 #include <bits/stdc++.h>
-using namespace std;  
+using namespace std;
 
-struct stat {int y,x,dir;};
-int n, k, turn, a[13][13], dy[]={0,0,-1,1}, dx[]={1,-1,0,0};
+struct Horse { int y, x, dir; };
+Horse h[11];
 vector<int> v[13][13];
-vector<stat> s;
+int n, k, a[13][13], dy[] = {0,0,-1,1}, dx[] = {1,-1,0,0}, turn;
 bool flag;
+
+bool out(int y, int x) {
+    return (y < 0 || x < 0 || y >= n || x >= n);
+}
+
+bool goAndCheck(vector<int>::iterator &pos, int &y, int &x, int &ny, int &nx) {
+    for (auto it = pos; it != v[y][x].end(); ++it) {
+        v[ny][nx].push_back(*it);
+        h[*it].y = ny;
+        h[*it].x = nx;
+    }
+    if (v[ny][nx].size() >= 4) return true;
+    v[y][x].erase(pos, v[y][x].end());
+    return false;
+}
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -13,41 +28,36 @@ int main() {
     cout.tie(NULL);
 
     cin >> n >> k;
-    for (int i=0; i<n; ++i) {
-        for (int j=0; j<n; ++j) {
+    for (int i = 0; i < n; ++i)
+        for (int j = 0; j < n; ++j) {
             cin >> a[i][j];
         }
-    }
-    for (int i=0; i<k; ++i) {
-        int y,x,dir; cin >> y >> x >> dir;
-        --y; --x; --dir;
+
+    for (int i = 1; i <= k; ++i) {
+        int y, x, dir; cin >> y >> x >> dir;
+        --y, --x, --dir;
         v[y][x].push_back(i);
-        s.push_back({y,x,dir});
+        h[i] = { y,x,dir };
     }
 
     while (turn<=1000) {
         ++turn;
-        for (int ord=0; ord<k; ++ord) {
-            int y=s[ord].y, x=s[ord].x, &dir=s[ord].dir;
-            int ny=y+dy[dir], nx=x+dx[dir];
-            
-            if (ny<0||nx<0||ny>=n||nx>=n||a[ny][nx]==2) {
-                dir^=1;
-                ny = y+dy[dir]; nx = x+dx[dir];
-                if (ny<0||nx<0||ny>=n||nx>=n||a[ny][nx]==2) continue;
+        for (int i = 1; i <= k; ++i) {
+            int y = h[i].y, x = h[i].x, &dir = h[i].dir;
+            auto pos = find(v[y][x].begin(), v[y][x].end(), i);
+            int ny = y + dy[dir];
+            int nx = x + dx[dir];
+            if (out(ny,nx)||a[ny][nx] == 2) {
+                dir ^= 1;
+                ny = y + dy[dir];
+                nx = x + dx[dir];
+                if (out(ny, nx) || a[ny][nx] == 2) continue;
             }
-            vector<int> &hereV = v[y][x];
-            vector<int> &nextV = v[ny][nx];
 
-            auto pos = find(hereV.begin(),hereV.end(),ord);
-            if (a[ny][nx]==1) reverse(pos, hereV.end());
-            for (auto it=pos; it!=hereV.end(); ++it) {
-                nextV.push_back(*it);
-                s[*it].y=ny;
-                s[*it].x=nx;
+            if (a[ny][nx] == 1) reverse(pos, v[y][x].end());
+            if (goAndCheck(pos, y, x, ny, nx)) {
+                flag = true; break;
             }
-            if (nextV.size()>=4) { flag=true; break; }
-            hereV.erase(pos, hereV.end());
         }
         if (flag) break;
     }
