@@ -1,36 +1,33 @@
 #include <bits/stdc++.h>
-using namespace std; 
+using namespace std;  
 
-int a[9];
-int total;
-pair<int, int> p;
+const int sz = 9, n=7;
+int a[10];
 
-void solve() {
-    for (int i=0; i<9; ++i) {
-        for (int j=i+1; j<9; ++j) {
-            if (total - a[i] - a[j] == 100) {
-                p = {i, j};
-            }
+void comb(int idx, int sum, vector<int>& v) {
+    if (v.size()==n) {
+        if (sum==100) {
+            sort(v.begin(), v.end());
+            for (auto& e:v) cout << e << endl;
+            exit(0);
         }
+    } 
+    for (int i=idx+1; i<sz; ++i) {
+        v.push_back(a[i]);
+        comb(i, sum+a[i], v);
+        v.pop_back();
     }
 }
 
 int main() {
-    for (int i=0; i<9; ++i) {
-        cin >> a[i];
-    }
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
-    sort(a, a+9);
-    total = accumulate(a, a+9, 0);
+    for (int i=0; i<sz; ++i) cin >> a[i];
 
-    solve();
-    
     vector<int> v;
-    for (int i=0; i<9; ++i) {
-        if (i != p.first && i != p.second) {
-            cout << a[i] << '\n';
-        }
-    }
+    comb(-1,0,v);
 
     return 0;
 }
