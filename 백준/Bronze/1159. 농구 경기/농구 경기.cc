@@ -1,25 +1,28 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-int a[26], N;
-string s, ret;
+int n;
+char ret[30], s[31];
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    cin >> N;
-    for (int i=0; i<N; ++i) {
-        cin >> s;
-        ++a[s[0]-'a'];
+    scanf("%d", &n);
+    for (int i=0; i<n; ++i) {
+        scanf("%s", s);
+        ++ret[s[0]-'a'];
     }
 
-    for (int i=0; i<26; ++i) {
-        if (a[i]>=5) ret += i+'a';
+    int cnt=0;
+    for (char i='a'; i<='z'; ++i) {
+        if (ret[i-'a']>=5) {
+            printf("%c", i);
+            ++cnt;
+        }
     }
-
-    cout << (ret.empty() ? "PREDAJA" : ret) << '\n';
+    if (cnt==0) printf("PREDAJA\n");
 
     return 0;
 }
