@@ -17,12 +17,7 @@ int main() {
     cout.tie(NULL);
 
     scanf("%s", s);
-    int len=0;
-    while(1) {
-        if (s[len]==0) break;
-        ++len;
-    }
-    printf("%d\n", checkPalin(0, len-1));
+    printf("%d\n", checkPalin(0, strlen(s)-1));
 
     return 0;
 }
