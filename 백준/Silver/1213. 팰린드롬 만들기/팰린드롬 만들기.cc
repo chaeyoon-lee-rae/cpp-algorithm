@@ -1,32 +1,30 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-string start, mid, ret;
-int a[27];
-bool flag;
+string s, start, mid, ret;
+int ch[30];
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    string s; cin >> s;
+    cin >> s;
     for (int i=0; i<s.size(); ++i) {
-        ++a[s[i]-'A'];
+        ++ch[s[i]-'A'];
     }
-
-    for (int i=0; i<26; ++i) {
-        if (a[i]) {
-            start.append(a[i]/2,i+'A');
-            mid.append(a[i]%2,i+'A');
+    for (int i='A'; i<='Z'; ++i) {
+        if (ch[i-'A']) {
+            start.append(ch[i-'A']/2,i);
+            mid.append(ch[i-'A']%2,i);
         }
     }
     if (mid.size()>1) cout << "I'm Sorry Hansoo" << '\n';
     else {
-        ret += start;
-        ret += mid;
+        ret+=start;
+        ret+=mid;
         reverse(start.begin(), start.end());
-        ret += start; cout << ret << '\n';
+        ret+=start; cout << ret << '\n';
     }
 
     return 0;
