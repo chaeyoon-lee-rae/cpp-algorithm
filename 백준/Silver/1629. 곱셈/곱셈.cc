@@ -1,14 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-typedef long long ll;
-ll a, b, c, ret;
+using ll = long long;
+ll a, b, c;
 
 ll go(ll a, ll b) {
     if (b==1) return a%c;
     ll ret = go(a, b/2);
-    ret = (ret * ret) %c;
-    if (b&1) ret = (ret * a) % c;
+    ret = (ret*ret)%c;
+    if (b&1) ret = (ret*a)%c;
     return ret;
 }
 
@@ -18,8 +18,7 @@ int main() {
     cout.tie(NULL);
 
     cin >> a >> b >> c;
-    ret = go(a, b);
-    cout << ret << '\n';
+    cout << go(a,b) << '\n';
 
     return 0;
 }
