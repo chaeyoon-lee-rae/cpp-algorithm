@@ -1,28 +1,26 @@
 #include <bits/stdc++.h>
 using namespace std;  
 
-int N, ret;
-string s;
+int t, cnt; 
+string str;
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    cin >> N;
-    while(N--) {
-        cin >> s;
+    cin >> t;
+    while(t--) {
         stack<char> stk;
-        for (int j=0; j<s.size(); ++j) {
-            if (stk.empty()) stk.push(s[j]);
-            else {
-                if (stk.top()==s[j]) stk.pop();
-                else stk.push(s[j]);
-            }
+        cin >> str;
+        for (char ch:str) {
+            if (stk.size()&&stk.top()==ch)
+                stk.pop();
+            else stk.push(ch);
         }
-        if (stk.empty()) ++ret;
+        if (stk.empty()) ++cnt;
     }
-    cout << ret << '\n';
+    cout << cnt << '\n';
 
     return 0;
 }
