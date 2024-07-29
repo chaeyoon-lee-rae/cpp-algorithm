@@ -15,6 +15,25 @@ struct cmp {
 };
 priority_queue<pii, vector<pii>, cmp> pq;
 
+
+//void printa() {
+//	for (int i = 0; i < n; ++i) {
+//		for (int j = 0; j < n; ++j)
+//			cout << a[i][j] << " ";
+//		cout << "\n";
+//	}
+//	cout << "\n";
+//}
+//
+//void printMin() {
+//	for (int i = 0; i < n; ++i) {
+//		for (int j = 0; j < n; ++j)
+//			cout << (min_path[i][j] == INF ? "-" : to_string(min_path[i][j])) << " ";
+//		cout << "\n";
+//	}
+//	cout << "\n";
+//}
+
 int main(int argc, char** argv)
 {
 	int test_case;
@@ -36,11 +55,15 @@ int main(int argc, char** argv)
 
 		fill(&min_path[0][0], &min_path[0][0] + 101 * 101, INF);
 
+		//printa();
+
 		min_path[0][0] = 0;
 		pq.push({ 0,0 });
 		while (pq.size()) {
 			tie(y, x) = pq.top();
 			pq.pop();
+
+			//cout << "{" << y << ", " << x << "}\n";
 
 			for (int i = 0; i < 4; ++i) {
 				int ny = y + dy[i];
@@ -53,6 +76,9 @@ int main(int argc, char** argv)
 					pq.push({ ny,nx });
 				}
 			}
+
+			//printMin();
+			if (min_path[n - 1][n - 1] != INF) break;
 		}
 
 		cout << "#" << test_case << " ";
