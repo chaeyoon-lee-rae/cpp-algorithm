@@ -2,7 +2,8 @@
 using namespace std;  
 
 const int INF = 1e9;
-int a[1001][1001], fireVis[1001][1001], jVis[1001][1001], dy[]={0,1,0,-1}, dx[]={1,0,-1,0}, n, m;
+int fireVis[1001][1001], jVis[1001][1001], dy[]={0,1,0,-1}, dx[]={1,0,-1,0}, n, m;
+bool a[1001][1001];
 queue<pair<int,int>> qF, qJ;
 
 void fireBfs() {
@@ -21,7 +22,6 @@ void fireBfs() {
 			}
 		}
 	}
-
 }
 
 int jBfs() {
@@ -29,14 +29,12 @@ int jBfs() {
 	while(qJ.size()) {
 		tie(y,x) = qJ.front();
 		qJ.pop();
-		// if (y==0||x==0||y==n-1||x==m-1)
-		// 	return jVis[y][x];
+		if (y==0||x==0||y==n-1||x==m-1)
+			return jVis[y][x];
 
 		for (int i=0; i<4; ++i) {
 			int ny = y + dy[i];
 			int nx = x + dx[i];
-			if (ny<0||nx<0||ny>=n||nx>=m)
-				return jVis[y][x];
 			if (jVis[ny][nx] || fireVis[ny][nx]<=jVis[y][x]+1) continue;
 			if (a[ny][nx]) {
 				jVis[ny][nx] = jVis[y][x] + 1;
