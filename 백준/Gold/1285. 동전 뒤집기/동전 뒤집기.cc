@@ -1,46 +1,55 @@
-#include <bits/stdc++.h>
-using namespace std;  
+#include <iostream>
+#include <string>
+#include <cstring>
+using namespace std;
 
-const int INF=1e6;
-int N, a[24], ret=INF;
-string s;
-vector<int> idxV;
+const int INF = 1e6;
+int n, a[21], orig[21], ret = INF;
 
-void go(int here) {
-    if (here==N+1) {
-        int tempRet=0;
-        for (int i=0; i<N; ++i) {
-            int cnt=0;
-            for (int j=0; j<N; ++j) {
-                if (a[j] & (1<<i)) ++cnt;
-            }
-            tempRet += min(cnt, N-cnt);
-        }
-        ret = min(ret,tempRet);
-        return;
+void check(int k) {
+    int cntT = 0;
+
+    for (int i = 0; i < n; ++i) {
+        if (k & (1 << i))
+            a[i] = ~a[i];
     }
-    go(here+1);
-    a[here]=~a[here];
-    go(here+1);
+
+    for (int i = 0; i < n; ++i) {
+        int cnt = 0;
+        for (int j = 0; j < n; ++j) {
+            if (a[j] & (1 << i)) ++cnt;
+        }
+        if (cnt <= n/2) cntT += cnt;
+        else
+            cntT += (n - cnt);
+    }
+
+    ret = min(ret, cntT);
 }
 
 int main() {
-    ios_base::sync_with_stdio(false);
+    ios::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
 
-    cin >> N;
-    for (int i=0; i<N; ++i) {
-        cin >> s;
-        int temp=1;
-        for (int j=0; j<N; ++j) {
-            if (s[j]=='H') a[i] |= temp;
-            temp*=2;
-        }
+    cin >> n;
+    for (int i = 0; i < n; ++i) {
+        string s; cin >> s;
+        int num = 0;
+        for (int j = 0; j < n; ++j)
+            if (s[j] == 'H') {
+                num |= (1 << j);
+            }
+        a[i] = num;
+        orig[i] = num;
     }
 
-    go(1);
-    cout << ret << '\n';
+    for (int i = 0; i < (1 << n); ++i) {
+        check(i);
+        memcpy(a, orig, sizeof(orig));
+    }
+
+    cout << ret << "\n";
 
     return 0;
 }
