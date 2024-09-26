@@ -1,26 +1,38 @@
-#include <bits/stdc++.h>
-using namespace std;  
+#include <iostream>
+#include <cstring>
+using namespace std;
 
-const int INF=1e6;
-int t, w, dp[1001][2][31], b[1001];
+const int INF = 1e9;
+int t, w, dp[1001][2][31];
+bool tree[1001];
 
-int go(int sec, int tree, int cnt) {
-    if (cnt<0) return -INF;
-    if (sec==t) return 0;
-    int &ret=dp[sec][tree][cnt];
+int go(int tr, int cur, int cnt) {
+    if (cur < t && cnt > w) return -INF;
+    if (cur == t) return 0;
+
+    int& ret = dp[cur][tr][cnt];
     if (~ret) return ret;
-    return ret=max(go(sec+1,tree^1,cnt-1),go(sec+1,tree,cnt))+(tree==b[sec]-1);
+
+    int a = go(tr ^ 1, cur + 1, cnt + 1);
+    int b = go(tr, cur + 1, cnt);
+    return ret = max(a, b) + (tr == tree[cur]);
 }
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
 
-    memset(dp,-1,sizeof(dp));
+    memset(dp, -1, sizeof(dp));
+
     cin >> t >> w;
-    for (int i=0; i<t; ++i) cin >> b[i];
-    cout << max(go(0,1,w-1), go(0,0,w)) << '\n';
+    int temp;
+    for (int i = 0; i < t; ++i) {
+        cin >> temp;
+        tree[i] = temp - 1;
+    }
+
+    cout << max(go(0, 0, 0), go(1, 0, 1)) << "\n";
 
     return 0;
 }
