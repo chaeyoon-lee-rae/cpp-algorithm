@@ -12,9 +12,8 @@ int go(int y, int x) {
         int ny = y + dy[i];
         int nx = x + dx[i];
         if (ny < 0 || nx < 0 || ny >= n || nx >= n) continue;
-        if (a[y][x] >= a[ny][nx]) continue;
-
-        dp[y][x] = max(dp[y][x], go(ny, nx) + 1);
+        if (a[y][x] < a[ny][nx]) 
+            dp[y][x] = max(dp[y][x], go(ny, nx) + 1);
     }
 
     return dp[y][x];
