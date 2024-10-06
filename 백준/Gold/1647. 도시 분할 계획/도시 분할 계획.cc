@@ -4,7 +4,7 @@
 using namespace std;
 
 int parents[100001], n, m, x, y, c, mx, ret;
-vector<pair<int, int>> town, cost;
+pair<int,int> town[1000001], cost[1000001];
 
 int Find(int x) {
     if (x == parents[x]) return x;
@@ -27,9 +27,6 @@ int main() {
     cin.tie(nullptr);
     cout.tie(nullptr);
 
-    town.resize(1000001);
-    cost.resize(1000001);
-
     cin >> n >> m;
     for (int i = 1; i <= n; ++i)
         parents[i] = i;
@@ -40,7 +37,7 @@ int main() {
         cost[i] = { c, i };
     }
 
-    sort(cost.begin(), cost.begin() + m);
+    sort(cost, cost + m);
 
     for (int i = 0; i < m; ++i) {
         c = cost[i].first;
