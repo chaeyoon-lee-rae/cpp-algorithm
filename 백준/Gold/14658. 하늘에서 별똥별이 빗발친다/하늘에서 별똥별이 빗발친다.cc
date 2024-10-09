@@ -2,7 +2,7 @@
 #include <algorithm>
 using namespace std;
 
-int n, m, l, k, ret, xPos[101], yPos[101];
+int n, m, l, k, ret;
 pair<int, int> star[101];
 
 bool check(int startY, int startX, int curY, int curX) {
@@ -14,16 +14,13 @@ int main() {
     cin.tie(nullptr);
 
     cin >> m >> n >> l >> k;
-    for (int i = 0; i < k; ++i) {
+    for (int i = 0; i < k; ++i)
         cin >> star[i].second >> star[i].first;
-        xPos[i] = star[i].second;
-        yPos[i] = star[i].first;
-    }
 
     for (int i = 0; i < k; ++i) {
-        int x = xPos[i];
+        int x = star[i].second;
         for (int j = 0; j < k; ++j) {
-            int y = yPos[j];
+            int y = star[j].first;
             int cnt = 0;
             for (int p = 0; p < k; ++p) {
                 int curY = star[p].first;
