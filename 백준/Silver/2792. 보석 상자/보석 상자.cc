@@ -5,7 +5,7 @@ typedef long long ll;
 int n, m, a[300001], hi, ret;
 
 bool calc(int div) {
-    ll cnt = 0;
+    int cnt = 0;
     for (int i = 0; i < m; ++i) {
         cnt += a[i] / div;
         if (a[i] % div) ++cnt;
