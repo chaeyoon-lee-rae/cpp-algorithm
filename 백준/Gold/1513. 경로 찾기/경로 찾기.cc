@@ -12,57 +12,35 @@ int main() {
     cin >> n >> m >> c;
     for (int i = 1; i <= c; ++i) {
         cin >> y >> x;
-        --y; --x;
         a[y][x] = i;
     }
 
-    if (a[0][0])
-        dp[0][0][1][a[0][0]] = 1;
+    if (a[1][1])
+        dp[1][1][1][a[1][1]] = 1;
     else
-        dp[0][0][0][0] = 1;
+        dp[1][1][0][0] = 1;
 
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < m; ++j) {
-            if (j < m - 1 && a[i][j + 1]) {
-                for (int k = 1; k <= c; ++k) { // cnt
-                    for (int p = 0; p < a[i][j + 1]; ++p) { // prev
-                        dp[i][j + 1][k][a[i][j + 1]] += dp[i][j][k - 1][p];
-                        dp[i][j + 1][k][a[i][j + 1]] %= mod;
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= m; ++j) {
+            if (a[i][j])
+                for (int p = 0; p < a[i][j]; ++p) // prev
+                    for (int k = 0; k <= p; ++k) { // cnt
+                        dp[i][j][k + 1][a[i][j]] += dp[i][j - 1][k][p] + dp[i - 1][j][k][p];
+                        dp[i][j][k + 1][a[i][j]] %= mod;
                     }
-                }
-            }
-            else {
-                for (int k = 0; k <= c; ++k) { // cnt
-                    for (int p = 0; p <= c; ++p) { // prev
-                        dp[i][j + 1][k][p] += dp[i][j][k][p];
-                        dp[i][j + 1][k][p] %= mod;
+            else
+                for (int p = 0; p <= c; ++p) // prev
+                    for (int k = 0; k <= p; ++k) { // cnt
+                        dp[i][j][k][p] += dp[i][j - 1][k][p] + dp[i - 1][j][k][p];
+                        dp[i][j][k][p] %= mod;
                     }
-                }
-            }
-
-            if (i < n - 1 && a[i + 1][j]) {
-                for (int k = 1; k <= c; ++k) { // cnt
-                    for (int p = 0; p < a[i + 1][j]; ++p) { // prev
-                        dp[i + 1][j][k][a[i + 1][j]] += dp[i][j][k - 1][p];
-                        dp[i + 1][j][k][a[i + 1][j]] %= mod;
-                    }
-                }
-            }
-            else {
-                for (int k = 0; k <= c; ++k) { // cnt
-                    for (int p = 0; p <= c; ++p) { // prev
-                        dp[i + 1][j][k][p] += dp[i][j][k][p];
-                        dp[i + 1][j][k][p] %= mod;
-                    }
-                }
-            }
         }
     }
 
     for (int i = 0; i <= c; ++i) {
         int sum = 0;
         for (int j = 0; j <= c; ++j) {
-            sum += dp[n - 1][m - 1][i][j];
+            sum += dp[n][m][i][j];
             sum %= mod;
         }
         cout << sum << " ";
