@@ -16,16 +16,14 @@ int main() {
         a[y][x] = i;
     }
 
-    if (a[0][0]) {
+    if (a[0][0])
         dp[0][0][1][a[0][0]] = 1;
-    }
-    else {
+    else
         dp[0][0][0][0] = 1;
-    }
 
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < m; ++j) {
-            if (j < m-1 && a[i][j + 1]) {
+            if (j < m - 1 && a[i][j + 1]) {
                 for (int k = 1; k <= c; ++k) { // cnt
                     for (int p = 0; p < a[i][j + 1]; ++p) { // prev
                         dp[i][j + 1][k][a[i][j + 1]] += dp[i][j][k - 1][p];
@@ -42,22 +40,7 @@ int main() {
                 }
             }
 
-            //for (int k = 0; k <= c; ++k) {
-            //    for (int i = 0; i < n; ++i) {
-            //        for (int j = 0; j < m; ++j) {
-            //            int sum = 0;
-            //            for (int p = 0; p <= c; ++p) {
-            //                sum += dp[i][j][k][p];
-            //            }
-            //            cout << sum << " ";
-            //        }
-            //        cout << "\n";
-            //    }
-            //    cout << "\n";
-            //}
-
-
-            if (i < n-1 && a[i + 1][j]) {
+            if (i < n - 1 && a[i + 1][j]) {
                 for (int k = 1; k <= c; ++k) { // cnt
                     for (int p = 0; p < a[i + 1][j]; ++p) { // prev
                         dp[i + 1][j][k][a[i + 1][j]] += dp[i][j][k - 1][p];
@@ -73,23 +56,6 @@ int main() {
                     }
                 }
             }
-
-
-
-            //for (int k = 0; k <= c; ++k) {
-            //    for (int i = 0; i < n; ++i) {
-            //        for (int j = 0; j < m; ++j) {
-            //            int sum = 0;
-            //            for (int p = 0; p <= c; ++p) {
-            //                sum += dp[i][j][k][p];
-            //            }
-            //            cout << sum << " ";
-            //        }
-            //        cout << "\n";
-            //    }
-            //    cout << "\n";
-            //}
-
         }
     }
 
