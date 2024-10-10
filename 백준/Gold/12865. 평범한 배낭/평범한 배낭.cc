@@ -1,21 +1,22 @@
-#include <bits/stdc++.h>
-using namespace std;  
+#include <iostream>
+using namespace std;
 
-int dp[100001], n, k, w, v;
+int n, k, w, v, dp[100001];
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
 
-    scanf("%d %d", &n, &k);
-    while(n--) {
-        scanf("%d %d", &w, &v);
-        for (int j=k; j>=w; --j) {
-            dp[j]=max(dp[j],dp[j-w]+v);
+    cin >> n >> k;
+    for (int i = 0; i < n; ++i) {
+        cin >> w >> v;
+        for (int j = k; j >= w; --j) {
+            dp[j] = max(dp[j], dp[j - w] + v);
         }
     }
-    printf("%d\n", dp[k]);
+
+    cout << dp[k] << "\n";
 
     return 0;
 }
