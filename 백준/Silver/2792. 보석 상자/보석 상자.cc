@@ -1,37 +1,41 @@
-#include <bits/stdc++.h>
-using namespace std;  
+#include <iostream>
+using namespace std;
 
-const int INF=1e9;
-int n, m, a[300001], hi, lo=1, ret=INF;
+typedef long long ll;
+int n, m, a[300001], hi, ret;
 
-bool check(int mid) {
-    int num=0;
-    for (int i=0; i<m; ++i) {
-        num+=a[i]/mid;
-        if (a[i]%mid) ++num;
+bool calc(int div) {
+    ll cnt = 0;
+    for (int i = 0; i < m; ++i) {
+        cnt += a[i] / div;
+        if (a[i] % div) ++cnt;
     }
-    return n>=num;
+    return cnt <= n;
 }
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
 
-    scanf("%d %d", &n, &m);
-    for (int i=0; i<m; ++i) {
-        scanf("%d", a+i); hi = max(hi, a[i]); 
+    cin >> n >> m;
+    for (int i = 0; i < m; ++i) {
+        cin >> a[i];
+        hi = max(hi, a[i]);
     }
-    while (lo<=hi) {
-        int mid = (lo+hi)/2;
-        if (check(mid)) {
-            ret = min(ret, mid);
-            hi = mid-1;
-        } else {
-            lo = mid+1;
+        
+    int l = 1, r = hi;
+    while (l <= r) {
+        int mid = l + (r - l) / 2;
+        if (calc(mid)) {
+            ret = mid;
+            r = mid - 1;
         }
+        else l = mid + 1;
     }
-    printf("%d\n", ret);
+
+    cout << ret << "\n";
+    
 
     return 0;
 }
