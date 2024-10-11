@@ -1,28 +1,31 @@
-#include <bits/stdc++.h>
-using namespace std;  
+#include <iostream>
+#include <queue>
+#include <vector>
+#include <algorithm>
+using namespace std;
 
-int N, ret;
-vector<pair<int,int>> v;
-priority_queue<int, vector<int>, greater<int>> pq;
+int n, day, ramen, ret;
+vector<int> v[200001];
+priority_queue<int> pq;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    cin >> N;
-    for (int i=0; i<N; ++i) {
-        int d, ramen; cin >> d >> ramen;
-        v.push_back({d,ramen});
+    cin >> n;
+    for (int i = 0; i < n; ++i) {
+        cin >> day >> ramen;
+        v[day].push_back(ramen);
     }
 
-    sort(v.begin(),v.end());
-    for (int i=0; i<N; ++i) {
-        pq.push(v[i].second);
-        if (pq.size()>v[i].first) pq.pop();
+    for (int i = n; i >= 1; --i) {
+        for (int r : v[i]) 
+            pq.push(r);
+        if (pq.size())
+            ret += pq.top(), pq.pop();
     }
-    while(pq.size()) ret+=pq.top(), pq.pop();
-    cout << ret << '\n';
+    
+    cout << ret << "\n";
 
     return 0;
 }
