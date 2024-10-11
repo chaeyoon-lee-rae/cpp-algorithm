@@ -1,44 +1,42 @@
-#include <bits/stdc++.h>
-using namespace std;  
+#include <iostream>
+using namespace std;
 
-const int INF=1e9;
-int n, m, lo, hi, a[100001], sum, ret=INF, mx;
+int n, m, a[100001], hi, l, r, ret, mxlen;
 
-bool check(int mid) {
-    int temp=0, cnt=0;
-    for (int i=0; i<n; ++i) {
-        temp+=a[i];
-        if (temp>mid) temp=a[i], ++cnt;
+bool check(int len) {
+    int sum = 0, cnt = 0;
+    for (int i = 0; i < n; ++i) {
+        if (sum + a[i] <= len) sum += a[i];
+        else ++cnt, sum = a[i];
     }
-    ++cnt;
-    // printf("cnt : %d\n", cnt);
-    return cnt<=m;
+    if (sum) ++cnt;
+
+    return cnt <= m;
 }
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
 
-    scanf("%d %d", &n, &m);
-    for (int i=0; i<n; ++i) {
-        scanf("%d", a+i);
-        sum+=a[i];
-        mx = max(mx, a[i]);
+    cin >> n >> m;
+    for (int i = 0; i < n; ++i) {
+        cin >> a[i];
+        hi += a[i];
+        mxlen = max(mxlen, a[i]);
     }
-    // printf("mx : %d\n", mx);
 
-    lo=1, hi=sum;
-    while (lo<=hi) {
-        int mid = (lo+hi)/2;
-        // printf("mid : %d\n", mid);
-        if (mid<mx||!check(mid)) lo=mid+1;
-        else {
-            ret=min(ret, mid);
-            hi=mid-1;
+    l = mxlen, r = hi;
+    while (l <= r) {
+        int mid = l + (r - l) / 2;
+        if (check(mid)) {
+            ret = mid;
+            r = mid - 1;
         }
+        else l = mid + 1;
     }
-    printf("%d\n", ret);
+
+    cout << ret << "\n";
 
     return 0;
 }
