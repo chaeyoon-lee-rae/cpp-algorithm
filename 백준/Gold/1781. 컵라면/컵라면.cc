@@ -2,7 +2,7 @@
 using namespace std;  
 
 int N, ret;
-pair<int,int> a[200001];
+vector<pair<int,int>> v;
 priority_queue<int, vector<int>, greater<int>> pq;
 
 int main() {
@@ -10,19 +10,19 @@ int main() {
     cin.tie(NULL);
     cout.tie(NULL);
 
-    scanf("%d", &N);
+    cin >> N;
     for (int i=0; i<N; ++i) {
-        scanf("%d %d", &a[i].first, &a[i].second);
+        int d, ramen; cin >> d >> ramen;
+        v.push_back({d,ramen});
     }
-    sort(a, a+N);
+
+    sort(v.begin(),v.end());
     for (int i=0; i<N; ++i) {
-        pq.push(a[i].second);
-        if (pq.size()>a[i].first) pq.pop();
+        pq.push(v[i].second);
+        if (pq.size()>v[i].first) pq.pop();
     }
-    while(pq.size()) {
-        ret+=pq.top(); pq.pop();
-    }
-    printf("%d\n", ret);
+    while(pq.size()) ret+=pq.top(), pq.pop();
+    cout << ret << '\n';
 
     return 0;
 }
