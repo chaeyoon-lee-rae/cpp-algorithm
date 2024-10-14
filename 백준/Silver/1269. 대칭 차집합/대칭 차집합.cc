@@ -1,24 +1,28 @@
-#include <bits/stdc++.h>
-using namespace std;  
+#include <iostream>
+#include <algorithm>
+using namespace std;
 
-int N, M, ret;
+int n, m;
+int a[200001];
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
 
-    cin >> N >> M;
-    vector<int> v(N);
-    for (int i=0; i<N; ++i) {
-        cin >> v[i];
+    cin >> n >> m;
+    for (int i = 0; i < n; ++i)
+        cin >> a[i];
+
+    sort(a, a + n);
+    int cnt = 0, temp;
+    for (int i = 0; i < m; ++i) {
+        cin >> temp;
+        if (binary_search(a, a+n, temp))
+            ++cnt;
     }
-    sort(v.begin(), v.end());
-    for (int i=0; i<M; ++i) {
-        int temp; cin >> temp;
-        if (binary_search(v.begin(), v.end(), temp)) ++ret;
-    }
-    cout << N + M - ret * 2 << '\n';
+
+    cout << n + m - 2 * cnt << "\n";
 
     return 0;
 }
