@@ -1,25 +1,20 @@
-#include <bits/stdc++.h>
-using namespace std;  
+#include <iostream>
+#include <cmath>
+using namespace std;
 
 typedef long long ll;
-const ll INF = 1e10;
-ll x, y, z, lo, hi, ret=-1;
+ll x, y;
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    cin >> x >> y;
+    ll a = y * 100;
+    ll b = x;
+    ll c = (a / b) + 1;
 
-    scanf("%lld %lld", &y, &x);
-    lo=1, hi=INF;
-    while(lo<=hi) {
-        ll mid=(lo+hi)/2;
-        if ((x+mid)*100 / (y+mid) > x*100/y) {
-            ret = mid;
-            hi=mid-1;
-        } else lo=mid+1;
-    }
-    printf("%lld\n", ret);
+    if (c == 100 || c * b == a || (c * b - a > 0 && 100 - c < 0) || (c * b - a < 0 && 100 - c > 0))
+        cout << -1 << "\n";
+    else
+        cout << ll(ceil(double(c * b - a) / (100 - c))) << "\n";
 
     return 0;
 }
