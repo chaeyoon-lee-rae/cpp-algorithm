@@ -3,27 +3,25 @@
 using namespace std;
 
 const int INF = 1e9;
-int t, w, dp[1001][2][31];
+int t, w, dp[1001][31][2];
 bool tree[1001];
 
-int go(int tr, int cur, int cnt) {
-    if (cur < t && cnt > w) return -INF;
-    if (cur == t) return 0;
+int go(int idx, int cnt, bool cur) {
+    if (cnt < 0) return -INF;
+    if (idx == t) return 0;
 
-    int& ret = dp[cur][tr][cnt];
+    int& ret = dp[idx][cnt][cur];
     if (~ret) return ret;
 
-    int a = go(tr ^ 1, cur + 1, cnt + 1);
-    int b = go(tr, cur + 1, cnt);
-    return ret = max(a, b) + (tr == tree[cur]);
+    ret = 0;
+    int a = go(idx + 1, cnt, cur);
+    int b = go(idx, cnt-1, cur^1);
+    return ret = max(ret, max(a, b) + (tree[idx] == cur ? 1 : 0));
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    cout.tie(nullptr);
-
-    memset(dp, -1, sizeof(dp));
 
     cin >> t >> w;
     int temp;
@@ -32,7 +30,8 @@ int main() {
         tree[i] = temp - 1;
     }
 
-    cout << max(go(0, 0, 0), go(1, 0, 1)) << "\n";
+    memset(dp, -1, sizeof(dp));
+    cout << max(go(0, w, 0), go(0, w - 1, 1)) << "\n";
 
     return 0;
 }
