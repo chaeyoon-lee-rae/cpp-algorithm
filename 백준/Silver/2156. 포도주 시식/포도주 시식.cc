@@ -1,34 +1,23 @@
 #include <iostream>
-#include <cstring>
 using namespace std;
 
-int n, dp[10001][3], a[10001];
-
-int go(int idx, int cons) {
-    if (idx == n) return 0;
-
-    int& ret = dp[idx][cons];
-    if (~ret) return ret;
-
-    ret = 0;
-    if (cons < 2) 
-        ret = max(ret, go(idx + 1, cons + 1) + a[idx]);
-    ret = max(ret, go(idx + 1, 0));
-
-    return ret;
-}
+int dp[10001], a[10001], n;
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    memset(dp, -1, sizeof(dp));
-
     cin >> n;
-    for (int i = 0; i < n; ++i)
+    for (int i = 1; i <= n; ++i)
         cin >> a[i];
 
-    cout << go(0, 0) << "\n";
+    dp[0] = 0;
+    dp[1] = a[1];
+    dp[2] = a[1] + a[2];
+    for (int i = 3; i <= n; ++i)
+        dp[i] = max(dp[i - 3] + a[i - 1] + a[i], max(dp[i - 2] + a[i], dp[i - 1]));
+
+    cout << dp[n] << "\n";
 
     return 0;
 }
