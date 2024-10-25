@@ -2,26 +2,27 @@
 #include <cstring>
 using namespace std;
 
-const int INF = 1e9;
-int t, w, dp[1001][31][2];
+const int INF = int(1e9);
+int dp[1001][31][2], t, w;
 bool tree[1001];
 
 int go(int idx, int cnt, bool cur) {
-    if (cnt < 0) return -INF;
+    if (cnt > w) return -INF;
     if (idx == t) return 0;
 
     int& ret = dp[idx][cnt][cur];
     if (~ret) return ret;
 
     ret = 0;
-    int a = go(idx + 1, cnt, cur);
-    int b = go(idx, cnt-1, cur^1);
-    return ret = max(ret, max(a, b) + (tree[idx] == cur ? 1 : 0));
+    ret = max(ret, max(go(idx + 1, cnt, cur), go(idx + 1, cnt + 1, cur ^ 1)) + (tree[idx] == cur));
+    return ret;
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+
+    memset(dp, -1, sizeof(dp));
 
     cin >> t >> w;
     int temp;
@@ -30,8 +31,7 @@ int main() {
         tree[i] = temp - 1;
     }
 
-    memset(dp, -1, sizeof(dp));
-    cout << max(go(0, w, 0), go(0, w - 1, 1)) << "\n";
+    cout << max(go(0, 0, 0), go(0, 1, 1)) << "\n";
 
     return 0;
 }
