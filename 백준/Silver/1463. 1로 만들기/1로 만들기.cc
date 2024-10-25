@@ -1,27 +1,26 @@
-#include <bits/stdc++.h>
-using namespace std;  
+#include <iostream>
+using namespace std;
 
-const int INF=1e6;
-int n, dp[INF+1];
-
-int go(int n) {
-    if (n==1) return 0;
-    int &ret=dp[n];
-    if (ret) return ret;
-    ret=INF;
-    if (n%3==0) ret=min(ret,go(n/3)+1);
-    if (n%2==0) ret=min(ret,go(n/2)+1);
-    ret=min(ret,go(n-1)+1);
-    return ret;
-}
+const int INF = int(1e9);
+int n, dp[1000001];
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
 
     cin >> n;
-    cout << go(n) << '\n';
+    fill(dp, dp + 1000001, INF);
+    dp[n] = 0;
+    for (int i = n; i >= 1; --i) {
+        if (i % 3 == 0) 
+            dp[i / 3] = min(dp[i / 3], dp[i] + 1);
+        if (i % 2 == 0) 
+            dp[i / 2] = min(dp[i / 2], dp[i] + 1);
+        dp[i - 1] = min(dp[i - 1], dp[i] + 1);
+    }
+
+    cout << dp[1] << "\n";
 
     return 0;
 }
