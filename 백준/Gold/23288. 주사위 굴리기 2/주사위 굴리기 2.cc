@@ -55,7 +55,7 @@ struct Dice
 
 } dice;
 
-int n, m, k, ret, a[21][21], dy[] = { 0, 1, 0, -1 }, dx[] = { 1, 0, -1, 0 };
+int n, m, k, ret, a[21][21], dy[] = { 0, 1, 0, -1 }, dx[] = { 1, 0, -1, 0 }, calc[21][21];
 bool vis[21][21];
 
 int dfs(int y, int x, const int& val) {
@@ -94,7 +94,9 @@ int main() {
         dice.move();
 
         memset(vis, 0, sizeof(vis));
-        ret += a[ny][nx] * dfs(ny, nx, a[ny][nx]);
+        if (calc[ny][nx]==0)
+            calc[ny][nx] = dfs(ny, nx, a[ny][nx]);
+        ret += a[ny][nx] * calc[ny][nx];
 
         dice.changeDir(a[ny][nx]);
 
