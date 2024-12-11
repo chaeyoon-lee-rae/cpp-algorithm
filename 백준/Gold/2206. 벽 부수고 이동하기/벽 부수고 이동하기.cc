@@ -3,8 +3,9 @@
 #include <queue>
 using namespace std;
 
-int n, m, a[1001][1001], vis[1001][1001][2], dy[] = { 0, 1, 0, -1 }, dx[] = { 1, 0, -1, 0 };
-struct e { int y, x, cnt; };
+int n, m, vis[1001][1001][2], dy[] = { 0, 1, 0, -1 }, dx[] = { 1, 0, -1, 0 };
+bool a[1001][1001];
+struct e { int y, x; bool cnt; };
 queue<e> q;
 
 int main() {
@@ -24,7 +25,7 @@ int main() {
     while (q.size()) {
         int y = q.front().y;
         int x = q.front().x;
-        int c = q.front().cnt;
+        bool c = q.front().cnt;
         q.pop();
 
         if (y == n - 1 && x == m - 1) {
