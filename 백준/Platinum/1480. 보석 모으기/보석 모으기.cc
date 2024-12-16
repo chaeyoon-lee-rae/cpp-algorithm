@@ -2,30 +2,21 @@
 #include <cstring>
 using namespace std;
 
-int jew[14], bagN, jewN, bagLim, dp[11][1<<14];
+int jew[14], bagN, jewN, bagLim, dp[11][1<<14][21];
 
-int check(int jewTemp) {
-    int cnt = 0, sum = 0;
-    for (int j = 0; j < jewN; ++j)
-        if ((1 << j) & jewTemp) {
-            ++cnt, sum += jew[j];
-            if (sum > bagLim) return 0;
-        }
-    return cnt;
-}
-
-int go(int idx, int curJew) {
+int go(int idx, int curJew, int curCap) {
     if (idx == bagN) return 0;
 
-    int& ret = dp[idx][curJew];
+    int& ret = dp[idx][curJew][curCap];
     if (~ret) return ret;
 
     ret = 0;
-    for (int i = 1; i < (1 << jewN); ++i) {
-        if (i & curJew) continue;
-        int c = check(i);
-        if (c) 
-            ret = max(ret, go(idx + 1, i | curJew) + c);
+    for (int i = 0; i < jewN; ++i) {
+        if ((1 << i) & curJew) continue;
+        if (curCap - jew[i] >= 0)
+            ret = max(ret, go(idx, curJew | (1 << i), curCap - jew[i]) + 1);
+        else
+            ret = max(ret, go(idx + 1, curJew, bagLim));
     }
 
     return ret;
@@ -41,7 +32,7 @@ int main() {
 
     memset(dp, -1, sizeof(dp));
 
-    cout << go(0, 0) << "\n";
+    cout << go(0, 0, bagLim) << "\n";
 
     return 0;
 }
