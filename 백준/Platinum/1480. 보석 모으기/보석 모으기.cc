@@ -2,7 +2,7 @@
 #include <cstring>
 using namespace std;
 
-int jew[14], bagN, jewN, bagLim, dp[11][1<<14][21];
+int jew[14], bagN, jewN, bagLim, dp[11][1<<13][21];
 
 int go(int idx, int curJew, int curCap) {
     if (idx == bagN) return 0;
